@@ -27,6 +27,14 @@ const ELEMENT_DATA: Alumnos[] = [
 export class TablaComponent {
   displayedColumns: string[] = ['numAlumno', 'nombre', 'apellidos', 'nif','edad','cursoMatriculado'];
   alumno = ELEMENT_DATA;
+
+  MostrarOcultar(value: string){
+    if(this.displayedColumns.includes(value)){
+      this.displayedColumns.splice(this.displayedColumns.indexOf(value),1);
+  } else {
+    this.displayedColumns.push(value)
+  }
+}
 }
 
 

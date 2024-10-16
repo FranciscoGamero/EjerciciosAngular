@@ -1,10 +1,13 @@
-<div class="row border-5 w-50 fondo text-white text-center border-black mt-5 mx-auto">
+<div class="row border-5 w-50 fondo text-white text-center border-black mt-5 mx-auto rounded-4">
     <div class="col-12 row">
-        <div class="fondoResultado col-6 rounded-4 py-4 mt-2 ms-5">
+        <div class="fondoResultado col-4 rounded-4 py-4 mt-2">
             <p>{{mostrar}}</p>
         </div>
-        <div class="col-5 py-4">
+        <div class="col-3 py-4">
             <button mat-stroked-button class="fondoBoton" (click)="limpiar()">Limpiar</button>
+        </div>
+        <div class="col-3 ms-5 py-4">
+            <button mat-stroked-button class="fondoBoton" (click)="calcular()">=</button>
         </div>
     </div>
     <div class="col-3 rounded-4 py-4">
@@ -41,6 +44,6 @@
         <button mat-stroked-button class="fondoBoton" (click)="entrada('3')">3</button>
     </div>
     <div class="col-3 rounded-4 py-4">
-        <button mat-stroked-button class="fondoBoton" (click)="calcular()">=</button>
+        <button mat-stroked-button class="fondoBoton" (click)="entrada('0')">0</button>
     </div>
 </div>
