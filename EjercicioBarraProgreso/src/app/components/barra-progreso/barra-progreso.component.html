@@ -1,0 +1,5 @@
+<button class="btn" (click)="cambiarColor('warning')">Amarillo</button>
+<button class="btn" (click)="cambiarColor('danger')">Rojo</button>
+<button class="btn" (click)="cambiarColor('primary')">Azul</button>
+<input type="number" [(ngModel)]="valor" (input)="cambiarValor($event)" min="0" max="100" class="form-control w-25 mb-3" />
+<ngb-progressbar class="mt-5 mx-auto w-50" [type]="color" textType="white" [value]="valor" [showValue]="true" />
