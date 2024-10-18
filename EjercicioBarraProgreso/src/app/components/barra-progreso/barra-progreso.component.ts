@@ -7,17 +7,17 @@ import { Component, Input } from '@angular/core';
 })
 export class BarraProgresoComponent {
   @Input() color = 'success';
-  @Input() valor = 5;
+  @Input() progreso = 5;
 
   cambiarColor(colorElegido: string) {
     this.color = colorElegido;
   }
   cambiarNumero(numero: number) {
-    this.valor = numero;
+    this.progreso = numero;
   }
   
-  cambiarValor(event: any) {
-    var nuevoValor = event.target.value;
-    this.valor = nuevoValor;
+  cambiarprogreso(event: any) {
+    var nuevoprogreso = event.target.value;
+    this.progreso = nuevoprogreso;
   }
 }

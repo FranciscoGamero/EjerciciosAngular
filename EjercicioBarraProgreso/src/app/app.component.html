@@ -1,1 +1,22 @@
-<app-barra-progreso></app-barra-progreso>>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <input
+          type="number"
+          max="100"
+          min="0"
+          [(ngModel)]="valorProgreso"
+        /><br />
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-12">
+        <app-barra-progreso [progreso]="valorProgreso"></app-barra-progreso>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <app-barra-progreso-2 [progreso]="valorProgreso"></app-barra-progreso-2>
+      </div>
+    </div>
+  </div>
