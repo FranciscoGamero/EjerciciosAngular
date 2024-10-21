@@ -1,0 +1,27 @@
+
+  <div class="container-fluid row fondoCarta">
+    @for(personaje of listadoPersonajes; track personaje.id) {
+        <div class="card col-4 mt-5">
+            <div class="card-body text-success">
+              <div class="row">
+                <div class="col-5">
+                  <img class="card-img" [src]="personaje.image" />
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                      <div class="col-12">
+                        <h3>{{personaje.name}}</h3>
+                        <p class="badge text-bg-secondary">${{ personaje.status }}</p>
+                        <h4 class="text-muted">Last known location:</h4>
+                        <p>{{personaje.origin.name}}</p>
+                        <h4 class="text-muted">First seen in:</h4>
+                        <p>{{personaje.episode[0]}}</p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+    }
+  </div>
+  
