@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div class="row mt-2 mb-2 mx-auto">
+      @for(persona of listaPersonas; track persona.url.split("/")[3]) {
+        <div class="col-md-3 col-12 mb-3">
+          <div class="card h-100" style="width: 18rem;">
+            <img [src]="'https://starwars-visualguide.com/assets/img/characters/' + persona.url.split('/')[3] + '.jpg'" class="card-img-top" alt="{{ persona.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ persona.name }}</h5>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  
