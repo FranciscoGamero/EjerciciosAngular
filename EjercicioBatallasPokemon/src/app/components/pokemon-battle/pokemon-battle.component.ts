@@ -1,23 +1,44 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-battle',
   templateUrl: './pokemon-battle.component.html',
-  styleUrl: './pokemon-battle.component.css'
+  styleUrls: ['./pokemon-battle.component.css']
 })
-export class PokemonBattleComponent implements OnInit {
-  
-  @Input() pokemon1: any;
-  @Input() pokemon2: any;
-  @Output() battleResult = new EventEmitter<string>();
+export class PokemonBattleComponent {
+  currentTurn: 'player1' | 'player2' = 'player1';
+  currentPokemonName: string = '';
+  vidaPlayer1: number = 100;
+  vidaPlayer2: number = 100;
 
-  ngOnInit(): void {
-    // Implementa la lógica de inicialización aquí
+  turnoJugador1(): boolean {
+    return this.currentTurn === 'player1';
   }
 
-  startBattle(): void {
-    // Implementa la lógica de la batalla aquí
-    const result = Math.random() > 0.5 ? 'Pokemon 1 wins!' : 'Pokemon 2 wins!';
-    this.battleResult.emit(result);
+  turnoJugador2(): boolean {
+    return this.currentTurn === 'player2';
+  }
+
+  cambiarTurno() {
+    this.currentTurn = this.currentTurn === 'player1' ? 'player2' : 'player1';
+  }
+
+  actualizarNombre(name: string) {
+    this.currentPokemonName = name;
+  }
+
+  actualizarVidaPlayer1(danio: number) {
+    this.vidaPlayer1 -= danio;
+    if (this.vidaPlayer1 < 0) {
+      this.vidaPlayer1 = 0;
+    }
+  }
+
+  actualizarVidaPlayer2(danio: number) {
+    this.vidaPlayer2 -= danio;
+    if (this.vidaPlayer2 < 0) {
+      this.vidaPlayer2 = 0;
+    }
   }
 }
