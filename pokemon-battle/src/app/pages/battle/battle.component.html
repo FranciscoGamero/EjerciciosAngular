@@ -1,0 +1,28 @@
+<div class="container fluid">
+  <div class="row">
+    <div class="col-md-4 col-12">
+      <app-pokemon
+      [pokemonId]="pokemonPlayer1Id"
+      [life]="lifePokemon1"
+      [isMyTurn]="pokemonTurn === 1"
+      [gameOver]="gameOver"
+      (onAttackDone)="applyDamage($event)"
+      ></app-pokemon>
+    </div>
+    <div class="col-md-4 col-12 align-content-center">
+      <H1 class="text-center">VS</H1>
+    </div>
+    <div class="col-md-4 col-12">
+      <app-pokemon
+      [pokemonId]="pokemonPlayer2Id"
+      [life]="lifePokemon2"
+      [isMyTurn]="pokemonTurn === 2"
+      [gameOver]="gameOver"
+      (onAttackDone)="applyDamage($event)"
+      ></app-pokemon>
+    </div>
+    @if (gameOver) {
+      <button (click)="resetGame()" class="btn btn-success mt-3">Reinciar Juego</button>
+    }
+  </div>
+</div>
