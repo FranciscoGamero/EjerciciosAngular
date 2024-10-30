@@ -44,7 +44,7 @@ export class PokemonComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['life']) {
-      if (!changes['life'].firstChange) {
+      if (!changes['life'].firstChange && changes['life'].currentValue != 100) {
         this.showAnimation = true;
         setTimeout(() => {
           this.showAnimation = false;
@@ -52,6 +52,8 @@ export class PokemonComponent implements OnInit {
       }
       if (changes['life'].currentValue <= 0) {
         this.animacionFin = true;
+      } else{
+        this.animacionFin = false;
       }
     }
   }

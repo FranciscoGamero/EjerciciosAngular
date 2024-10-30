@@ -10,7 +10,7 @@ export class BattleComponent {
   pokemonPlayer1Id = 55;
   pokemonPlayer2Id = 24;
   lifePokemon1 = 100;
-  lifePokemon2 = 100;
+  lifePokemon2 = 50;
   gameOver = false;
 
   applyDamage(damage: number) {
