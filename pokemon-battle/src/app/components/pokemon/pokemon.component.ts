@@ -9,6 +9,7 @@ import {
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonResponse } from '../../models/pokemon-response.interface';
 import { AnimationOptions } from 'ngx-lottie';
+import { ImagenPipe } from '../../pipes/imagen-pipe.pipe';
 
 @Component({
   selector: 'app-pokemon',
@@ -30,7 +31,7 @@ export class PokemonComponent implements OnInit {
   @Input() gameOver: boolean = false;
   showAnimation: boolean = false;
   animacionFin: boolean = false;
-  constructor(private pokemonService: PokemonService) {}
+  constructor(private pokemonService: PokemonService, private imagenPipe: ImagenPipe) {}
 
   ngOnInit(): void {
     this.pokemonService.getPokemon(this.pokemonId!).subscribe((pokemonResponse) => {
@@ -70,4 +71,5 @@ export class PokemonComponent implements OnInit {
       this.onAttackDone.emit(damage);
     }
   }
+
 }
