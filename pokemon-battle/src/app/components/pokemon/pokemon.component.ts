@@ -22,10 +22,6 @@ export class PokemonComponent implements OnInit {
   derrota: AnimationOptions = {
     path: '/assets/GameOver.json',
   }
- ganador : AnimationOptions = {
-    path: '/assets/YouWin.json',
-  }
-
   @Input() pokemonId: number | undefined;
   pokemon: PokemonResponse | undefined;
   @Input() life: number = 100;
