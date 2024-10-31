@@ -1,0 +1,169 @@
+<div class="container-fluid" style="width: 400px">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="text-center">Crear nuevo usuario</h1>
+      </div>
+    </div>
+    @if (mostrarErrores) {
+        <div class="alert alert-danger">
+            @if (!todosCamposCompletos()) {
+                <h2>Todos los campos son obligatorios.</h2>
+            }
+            @if (!verificarContrasenia()) {
+                <h2>Las contraseñas no coinciden.</h2>
+            }
+        </div>
+    }
+    <div [hidden]="enviado">
+      <form
+        action=""
+        method="post"
+        (ngSubmit)="addUsuario()"
+        #userForm="ngForm"
+      >
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label for="nombre" class="form-label">Nombre *</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              name="nombre"
+              placeholder="Nombre"
+              required
+              [(ngModel)]="usuario.nombre"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <label for="apellidos" class="form-label">Apellidos *</label>
+            <input
+              type="text"
+              class="form-control"
+              id="apellidos"
+              name="apellidos"
+              placeholder="Apellidos"
+              required
+              [(ngModel)]="usuario.apellidos"
+            />
+          </div>
+          <div class="col-8 mb-3">
+            <label for="NIF" class="form-label">NIF (Sin la la letra)*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="NIF"
+              name="NIF"
+              placeholder="NIF"
+              required
+              [(ngModel)]="usuario.NIF"
+            />
+          </div>
+          <div class="col-4 align-content-center mt-3">
+            <h2>{{letraDNI(usuario.NIF)}}</h2>
+          </div>
+          <div class="col-12 mb-3">
+            <label for="email" class="form-label">Email *</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Email"
+              [(ngModel)]="usuario.email"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <label for="telefono" class="form-label">Teléfono *</label>
+            <input
+              type="text"
+              class="form-control"
+              id="telefono"
+              name="telefono"
+              placeholder="Teléfono"
+              [(ngModel)]="usuario.telefono"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <label for="sexo" class="form-label">Sexo *</label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              name="sexo"
+              id="sexo"
+              [(ngModel)]="usuario.sexo"
+            >
+              <option value="" selected="selected">-Seleccione-</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="col-12 mb-3">
+            <label for="conocimientoPagina" class="form-label">¿Cómo conociste la página? *</label>
+            <input
+              type="text"
+              class="form-control"
+              id="conocimientoPagina"
+              name="conocimientoPagina"
+              placeholder="¿Cómo conociste la página?"
+              [(ngModel)]="usuario.conocimientoPagina"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <label for="contrasenia" class="form-label">Contraseña *</label>
+            <input
+              type="password"
+              class="form-control"
+              id="contrasenia"
+              name="contrasenia"
+              placeholder="Contraseña"
+              [(ngModel)]="usuario.contrasenia"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <label for="confirmarContrasenia" class="form-label">Confirmar Contraseña *</label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmarContrasenia"
+              name="confirmarContrasenia"
+              placeholder="Confirmar Contraseña"
+              [(ngModel)]="confirmarContrasenia"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="terms"
+                name="terms"
+                [(ngModel)]="usuario.terminos"
+              />
+              <label class="form-check-label" for="terms">
+                Acepto los <a href="#">términos y condiciones</a> *
+              </label>
+            </div>
+          </div>  
+          <div class="col-12">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="width: 100%"
+              (click)="validarFormulario()"
+            >
+              Crear usuario
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row" [hidden]="!enviado">
+      <div class="col-12">
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+          <div>Formulario enviado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
