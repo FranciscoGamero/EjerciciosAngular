@@ -1,0 +1,170 @@
+<header class="fondoHeader">
+  <div class="row align-items-center mx-auto">
+    <div class="col">
+      <img src="assets/logo.png" class="tamLogo" alt="Logo">
+    </div>
+    <div class="col poscionarTitulo mt-2">
+      <h1 class="tamTitulo">GasofAPP</h1>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar fondoNav fs-4">
+  <div class="container-fluid justify-content-between mt-4">
+    <mat-form-field>
+      <mat-label class="w-25">Combustibles</mat-label>
+      <mat-select [(ngModel)]="selectedFuel" (selectionChange)="filterByFuel($event.value)" required>
+        <mat-option selected value="all">Todos</mat-option>
+        <mat-option value="biodiesel">Biodiesel</mat-option>
+        <mat-option value="gasoleoA">Gasoleo A</mat-option>
+        <mat-option value="gasoleoB">Gasoleo B</mat-option>
+        <mat-option value="95">Gasolina 95 E5</mat-option>
+        <mat-option value="98">Gasolina 98 E5</mat-option>
+        <mat-option value="hidrogeno">Hidrogeno</mat-option>
+      </mat-select>
+
+    </mat-form-field>
+
+    <div class="d-flex">
+      <div class="d-flex">
+        <div class="rounded-3 colorFondo  p-2 mb-2">
+          <mat-slider [min]=" 0" [max]="2" [step]=" 0.1">
+            <input matSliderStartThumb name="precioMinimo" [(ngModel)]="precioMinimo">
+            <input matSliderEndThumb name="precioMaximo" [(ngModel)]="precioMaximo">
+          </mat-slider>
+          <div class="d-flex gap-5">
+            <p class="me-1">{{precioMinimo}}€</p>
+            <p class="ms-4">{{precioMaximo}}€</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button class="rounded-3 colorFondo  border-0 py-1 ms-2 mt-3" (click)="filterByPrice()">Buscar
+          <br>Precios</button>
+      </div>
+    </div>
+    <div class="d-flex">
+      <form class="w-75">
+        <mat-form-field class="example-full-width">
+          <mat-label>Codigo Postal</mat-label>
+          <input type="text" placeholder="Escribe el código postal" aria-label="Text" matInput [formControl]="myControl"
+            [matAutocomplete]="auto" [(ngModel)]="codigoPostalBuscado">
+          <mat-autocomplete #auto="matAutocomplete">
+            @for (option of codigosPostalesAutocompleter | async; track option) {
+            <mat-option [value]="option">{{option}}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+      <button class="rounded-3 colorFondo  border-0 h-100 ms-1 mt-2 fs-3 w-100" (click)="filterByCodigoPostal()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"
+          class="material-icons fs-3"></mat-icon>
+      </button>
+    </div>
+    <div class="d-flex mb-4 me-3">
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn colorFondo  fs-5" id="dropdownBasic1" ngbDropdownToggle>
+          Seleccionar Carburantes
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <section class="d-flex flex-column">
+            @for (tipo of fuelTypes; track $index) {
+            <mat-checkbox (click)="modificarListaCarburantes(tipo)">{{tipo}}</mat-checkbox>
+            }
+            <button class="rounded-3 colorFondo  border-0 h-100 m-3" (click)="filtrarPorCarburantes()">Filtrar</button>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex mb-4 me-3">
+      <mat-form-field>
+        <mat-label class="w-25">Comunidades</mat-label>
+        <mat-select (selectionChange)="filtrarPorComunidadAutonoma($event.value)"
+          required>
+          <mat-option selected value="all">Todas</mat-option>
+          @for (comunidades of listaComunidadesAutonomas; track $index) {
+          <mat-option value="{{comunidades.IDCCAA}}">{{comunidades.CCAA}}</mat-option>
+          }
+        </mat-select>
+
+      </mat-form-field>
+    </div>
+    @if (comunidadIsSeleccionada) {
+    <div id="provincia" class="d-flex mb-4 me-3">
+      <mat-form-field>
+        <mat-label class="w-25">Provincias</mat-label>
+        <mat-select (selectionChange)="filtrarPorProvincia($event.value)" required>
+          @for (provincia of listaProvincias; track $index) {
+          <mat-option value="{{provincia.IDPovincia}}">{{provincia.Provincia}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+    }
+  </div>
+</nav>
+
+<div class="row mt-4 ">
+  @for(gasolinera of gasolinerasFiltradas; track
+  gasolinerasFiltradas.indexOf(gasolinera)) {
+
+  <div class="col mt-3">
+    <div class="card m-2 h-100 colorFondo fw-bold" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title text-center">{{ gasolinera.nombre }}</h5>
+        <div class="d-flex h-75">
+          <div class="me-3 border-end border-black">
+            <p class="card-text">Provincia: {{gasolinera.provincia}}</p>
+            <p class="mt-5">Horario <br>{{gasolinera.horario}}</p>
+            <p class="card-text">{{gasolinera.postalCode}}</p>
+             <a [href]="gasolinera | pipeGoogleMaps" target="blank" class="w-50 me-3"><button class="btn btn-primary">Mostrar Mapa</button></a>
+          </div>
+          <div>
+            @if (selectedFuel === 'all') {
+            @if(gasolinera.price95 != 0) {
+            <p class="card-text">Gasolina 95: {{gasolinera.price95}}€</p>
+            }
+            @if(gasolinera.priceGasoleoA != 0) {
+            <p class="card-text">Gasoleo A: {{gasolinera.priceGasoleoA}}€</p>
+            }
+            @if(gasolinera.priceBiodiesel != 0) {
+            <p class="card-text">Biodiesel: {{gasolinera.priceBiodiesel}}€</p>
+            }
+            @if(gasolinera.priceGasolina98 != 0) {
+            <p class="card-text">Gasolina 98: {{gasolinera.priceGasolina98}}€</p>
+            }
+            @if(gasolinera.priceHidrogeno != 0) {
+            <p class="card-text">Hidrogeno: {{gasolinera.priceHidrogeno}}€</p>
+            }
+            @if(gasolinera.priceGasoleoB != 0) {
+            <p class="card-text">Gasoleo B: {{gasolinera.priceGasoleoB}}€</p>
+            }
+            }
+            @if (selectedFuel === '95' && gasolinera.price95 != 0) {
+            <p class="card-text">Gasolina 95: {{gasolinera.price95}}€</p>
+            }
+            @if (selectedFuel === 'gasoleoA' && gasolinera.priceGasoleoA != 0) {
+            <p class="card-text">Gasoleo A: {{gasolinera.priceGasoleoA}}€</p>
+            }
+            @if (selectedFuel === 'biodiesel' && gasolinera.priceBiodiesel != 0) {
+            <p class="card-text">Biodiesel: {{gasolinera.priceBiodiesel}}€</p>
+            }
+            @if (selectedFuel === '98' && gasolinera.priceGasolina98 != 0) {
+            <p class="card-text">Gasolina 98: {{gasolinera.priceGasolina98}}€</p>
+            }
+            @if (selectedFuel === 'hidrogeno' && gasolinera.priceHidrogeno != 0) {
+            <p class="card-text">Hidrogeno: {{gasolinera.priceHidrogeno}}€</p>
+            }
+            @if (selectedFuel === 'gasoleoB' && gasolinera.priceGasoleoB != 0) {
+            <p class="card-text">Gasoleo B: {{gasolinera.priceGasoleoB}}€</p>
+            }
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+  }
+</div>

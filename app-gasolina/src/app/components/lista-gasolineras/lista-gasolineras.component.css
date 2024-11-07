@@ -1,0 +1,46 @@
+.fondoNav {
+    background-color: #00b4d8;
+}
+
+.colorFondo {
+    background-color: #2AA89E;
+    border: none;
+    color: white;
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.mat-form-field {
+    margin-right: 10px;
+}
+
+.fondoNav {
+    background-color: #06314A;
+}
+
+.fondoHeader {
+    background-color: #056F72;
+    color: white;
+}
+
+.tamLogo {
+    width: 300px;
+}
+
+.tamTitulo {
+    font-size: 5.5em;
+}
+
+.poscionarTitulo {
+    transform: translateX(-25%);
+}
