@@ -95,7 +95,7 @@
         <mat-label class="w-25">Provincias</mat-label>
         <mat-select (selectionChange)="filtrarPorProvincia($event.value)" required>
           @for (provincia of listaProvincias; track $index) {
-          <mat-option value="{{provincia.IDPovincia}}">{{provincia.Provincia}}</mat-option>
+          <mat-option value="{{provincia.IDPovincia}}">{{provincia.Provincia | titlecase}}</mat-option>
           }
         </mat-select>
       </mat-form-field>
@@ -115,7 +115,7 @@
         <h5 class="card-title text-center">{{ gasolinera.nombre }}</h5>
         <div class="d-flex h-75">
           <div class="me-3 border-end border-black">
-            <p class="card-text">Provincia: {{gasolinera.provincia}}</p>
+            <p class="card-text">Provincia: {{gasolinera.provincia | titlecase}}</p>
             <p class="mt-5">Horario <br>{{gasolinera.horario}}</p>
             <p class="card-text">{{gasolinera.postalCode}}</p>
              <a [href]="gasolinera | pipeGoogleMaps" target="blank" class="w-50 me-3"><button class="btn btn-primary">Mostrar Mapa</button></a>
