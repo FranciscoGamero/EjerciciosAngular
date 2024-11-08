@@ -11,6 +11,6 @@ export class MunicipioService{
   constructor(private http: HttpClient) { }
 
   getPostalCodeList(): Observable<CodeList[]> {
-    return this.http.get<CodeList[]>('http://localhost:3000/code-list/?limit=50');
+    return this.http.get<CodeList[]>('http://localhost:3000/code-list');
   }
 }

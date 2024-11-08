@@ -33,6 +33,7 @@ export class ListaGasolinerasComponent implements OnInit {
   comunidadIsSeleccionada: boolean = false;
   listaProvincias: Provincia[] = [];
   provinciaSeleccionada: string = 'all';
+  fuelSeleccionado: boolean = false;
 
 
   constructor(private gasolineraService: GasolineraService, private municipioService: MunicipioService,
@@ -100,64 +101,57 @@ export class ListaGasolinerasComponent implements OnInit {
     return isNaN(precioCorregido) ? 0 : precioCorregido;
   }
 
-  filterByFuel(fuel: string) {
-    switch (fuel) {
-      case 'all':
-        this.gasolinerasFiltradas = this.listadoGasolineras;
-        break;
-      case '95':
-        this.gasolinerasFiltradas = this.listadoGasolineras.filter(
-          (gasolinera) => gasolinera.price95 !=0
-        );
+  filterByFuel(selectedFuel: string) {
+    this.selectedFuel = selectedFuel;
+    this.fuelSeleccionado = true;
+    this.gasolinerasFiltradas = this.listadoGasolineras.filter(gasolinera => {
+      switch (selectedFuel) {
+        case 'all':
+          this.fuelSeleccionado = false;
+          return this.gasolinerasFiltradas;
+        case 'biodiesel':
+          return gasolinera.priceBiodiesel != 0;
+        case 'gasoleoA':
+          return gasolinera.priceGasoleoA != 0;
+        case 'gasoleoB':
+          return gasolinera.priceGasoleoB != 0;
+        case '95':
+          return gasolinera.price95 != 0;
+        case '98':
+          return gasolinera.priceGasolina98 != 0;
+        case 'hidrogeno':
+          return gasolinera.priceHidrogeno != 0;
+        default:
+          return false;
+      }
+    });
+    console.log('Filtered Gas Stations:', this.gasolinerasFiltradas);
+  }
 
-        break;
-      case 'gasoleoA':
-        this.gasolinerasFiltradas = this.listadoGasolineras.filter(
-          (gasolinera) => {
-            return gasolinera.priceGasoleoA !=0;
-          }
-        );
-        break;
+  getPriceByFuel(gasolinera: Gasolinera, fuel: string): number {
+    switch (fuel) {
       case 'biodiesel':
-        this.gasolinerasFiltradas = this.listadoGasolineras.filter(
-          (gasolinera) => gasolinera.priceBiodiesel !=0
-        );
-        break;
-      case '98':
-        this.gasolinerasFiltradas = this.listadoGasolineras.filter(
-          (gasolinera) => {
-            return gasolinera.priceGasolina98 !=0;
-          }
-        );
-        break;
-      case 'hidrogeno':
-        this.gasolinerasFiltradas = this.listadoGasolineras.filter(
-          (gasolinera) => {
-            return gasolinera.priceHidrogeno !=0;
-          }
-        );
-        break;
+        return gasolinera.priceBiodiesel;
+      case 'gasoleoA':
+        return gasolinera.priceGasoleoA;
       case 'gasoleoB':
-        this.gasolinerasFiltradas = this.listadoGasolineras.filter(
-          (gasolinera) => {
-            return gasolinera.priceGasoleoB !=0;
-          }
-        );
-        break;
+        return gasolinera.priceGasoleoB;
+      case '95':
+        return gasolinera.price95;
+      case '98':
+        return gasolinera.priceGasolina98;
+      case 'hidrogeno':
+        return gasolinera.priceHidrogeno;
+      default:
+        return 0;
     }
   }
+
   filterByPrice() {
-
-    this.gasolinerasFiltradas = this.listadoGasolineras.filter(
-      (gasolinera) =>
-        (gasolinera.price95 !=0 && gasolinera.price95 >= this.precioMinimo && gasolinera.price95 <= this.precioMaximo) ||
-        (gasolinera.priceGasoleoA !=0 && gasolinera.priceGasoleoA >= this.precioMinimo && gasolinera.priceGasoleoA <= this.precioMaximo) ||
-        (gasolinera.priceBiodiesel !=0 && gasolinera.priceBiodiesel >= this.precioMinimo && gasolinera.priceBiodiesel <= this.precioMaximo) ||
-        (gasolinera.priceGasolina98 !=0 && gasolinera.priceGasolina98 >= this.precioMinimo && gasolinera.priceGasolina98 <= this.precioMaximo) ||
-        (gasolinera.priceHidrogeno !=0 && gasolinera.priceHidrogeno >= this.precioMinimo && gasolinera.priceHidrogeno <= this.precioMaximo) ||
-        (gasolinera.priceGasoleoB !=0 && gasolinera.priceGasoleoB >= this.precioMinimo && gasolinera.priceGasoleoB <= this.precioMaximo)
-    );
-
+    this.gasolinerasFiltradas = this.listadoGasolineras.filter(gasolinera => {
+      const price = this.getPriceByFuel(gasolinera, this.selectedFuel);
+      return price >= this.precioMinimo && price <= this.precioMaximo;
+    });
   }
   filterByCodigoPostal() {
     if (this.codigoPostalBuscado === '') {
@@ -218,6 +212,7 @@ export class ListaGasolinerasComponent implements OnInit {
     this.comunidadIsSeleccionada = true;
     this.buscarProvincias(IDCCAA);
   } else{
+    this.ngOnInit();
     this.comunidadIsSeleccionada = false;
   }
   }
