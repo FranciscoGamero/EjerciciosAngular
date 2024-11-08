@@ -6,7 +6,7 @@ import { UsuarioDto } from '../../models/usuario.dto';
   templateUrl: './formulario-registro-component.component.html',
   styleUrl: './formulario-registro-component.component.css'
 })
-export class FormularioRegistroComponentComponent {
+export class FormularioRegistroComponent {
 
   usuario = new UsuarioDto('', '', '', '', '', '', '', '');
   enviado = false;
