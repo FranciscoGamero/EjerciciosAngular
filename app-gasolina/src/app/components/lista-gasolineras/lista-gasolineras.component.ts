@@ -46,7 +46,7 @@ export class ListaGasolinerasComponent implements OnInit {
       try {
         parsedData = JSON.parse(respuestaEnString);
         let arrayGasolineras = parsedData['ListaEESSPrecio'];
-        this.listadoGasolineras = this.cleanProperties(arrayGasolineras).splice(0, 200);
+        this.listadoGasolineras = this.cleanProperties(arrayGasolineras);
         this.gasolinerasFiltradas = this.listadoGasolineras;
         console.log(this.listadoGasolineras);
       } catch (error) {
